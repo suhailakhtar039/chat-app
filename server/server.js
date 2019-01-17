@@ -3,6 +3,7 @@ const express=require("express");
 const socketIO=require("socket.io");
 const http=require("http");
 
+const {generateMessage}=require("./utils/message");
 const app=express();
 const publicPath=path.join(__dirname,"../public");
 const port=process.env.PORT||3000;
@@ -15,29 +16,17 @@ io.on("connection",(socket)=>{
 	socket.on("disconnect",()=>{
 		console.log("client disconnected");
 	})
-	socket.emit('newMessage',{
-		from:'Admin',
-		text:'Welcome to the chat app',
-		createdAt:new Date().getTime()
-	});
-	socket.broadcast.emit('newMessage',{
-		from:'Admin',
-		text:'New user joined',
-		createdAt:new Date().getTime()
-	});
+	socket.emit('newMessage',generateMessage('Admin','Welcome to chat app!'));
+	socket.broadcast.emit('newMessage',generateMessage('Admin','New user joined!'));
 	socket.on("createMessage",(message)=>{
 		console.log("Create message",message); 
-		// io.emit('newMessage',{  //It will emit the events to each and every client including
-		// 	from:message.from,	   // this
+		io.emit('newMessage',generateMessage(message.from,message.text));
+		//===It will emit the events to each and every client excluding this
+		// socket.broadcast.emit("newMessage",{
+		// 	from:message.from,
 		// 	text:message.text,
 		// 	createdAt:new Date().getTime()
 		// });
-		//===It will emit the events to each and every client excluding this
-		socket.broadcast.emit("newMessage",{
-			from:message.from,
-			text:message.text,
-			createdAt:new Date().getTime()
-		});
 	});
 })
 
