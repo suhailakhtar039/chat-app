@@ -23,7 +23,7 @@ io.on("connection",(socket)=>{
 	socket.on("createMessage",(message,callback)=>{
 		console.log("Create message",message); 
 		io.emit('newMessage',generateMessage(message.from,message.text));
-		callback('This is from the server');
+		callback();
 		//===It will emit the events to each and every client excluding this
 		// socket.broadcast.emit("newMessage",{
 		// 	from:message.from,
