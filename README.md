@@ -26,7 +26,7 @@ To clone entire repository run `git clone https://github.com/suhailakhtar039/cha
 
 ## Deployement
 
-The app is deployed on heroku with following URL [https://sheltered-mountain-53860.herokuapp.com/] (https://sheltered-mountain-53860.herokuapp.com/).
+The app is deployed on heroku with following URL https://sheltered-mountain-53860.herokuapp.com/.
 
 ## Steps
 
